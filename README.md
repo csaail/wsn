@@ -1,5 +1,6 @@
 #Implement eBGP for IPv4
 
+```bash
 #roter1
 router bgp 100
 network 192.168.1.0
@@ -13,5 +14,4 @@ network 192.168.3.0
 network 192.168.2.0
 neighbor 192.168.2.1 remote-as 100
 neighbor 192.168.1.2 remote-as 100
-
-
+```
