@@ -1,0 +1,232 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=====================================================================================================================================================================================================
+
+
+Prac 1: Configuring WEP on Wireless Router 
+
+Add port to router HWIC 2T
+Connect router via serial DCE connection 
+
+PC0 : (IP : 192.168.1.2 DG: 192.168.1.1)
+PC1 : (IP : 192.168.2.2 DG: 192.168.2.1) 
+
+ClockRate: 64000
+R0: f0/0: 192.168.1.0 S0/0/0: 10.0.0.1
+R1: f0/0: 192.168.2.0 S0/0/0: 10.0.0.2
+
+Router(config-if)#exit
+Router(config)#router rip
+Router(config-router)# Version 2
+
+RIP:
+R0: 10.0.0.0, 20.0.0.0, 192.168.1.0
+R1: 10.0.0.0, 192.168.2.0
+
+wireless Router> ip> 192.168.1.1
+wireless security – security mode WEP – key1 2a2a2a2a2a
+Click on PC2 > wireless – connect
+
+=====================================================================================================================================================================================================
+
+
+
+Prac 2: Demonstrating Distributed Layer Function. 
+
+Add port to router HWIC 2T
+R0 - R1; R2 - R3; f01 - f00 
+R0 – fa0/0: 172.16.1.0, fa0/1 10.0.0.1	S0/1/0:	30.0.0.1 
+R1 - fa0/0 10.0.0.2	S0/1/0: 40.0.0.1 
+R2 - 
+
+=====================================================================================================================================================================================================
+
+
+Prac 3: Placing ACL
+
+add components: 1841 routers , end devices
+Make the connections (Router – Router : Copper Cross Over ; Other devices : Copper Straightthrough, F0/0 - F0/0, F0/1 - switch) 
+
+PC0: ip: 192.168.1.2, dg: 192.168.1.1
+PC1: ip: 192.168.2.2, dg: 192.168.2.1
+PC2: ip: 192.168.2.3, dg: 192.168.2.1
+
+R0: f0/1: 192.168.1.1, f0/0: 192.168.3.1
+R1: f0/1: 192.168.2.1, f0/0: 192.168.3.2
+
+Static:
+R0: 192.168.2.0; 255.255.255.0; 192.168.3.2
+R1: 192.168.1.0; 255.255.255.0; 192.168.3.1
+
+R0> enable
+R0# configure terminal
+R0(config)# access-list 1 deny 192.168.2.3 0.0.0.0
+R0(config)# access-list 1 permit any
+R0(config)# interface fa0/1
+R0(config-if)# ip access-group 1 out
+R0(config-if)# exit
+R0(config)# exit
+
+=====================================================================================================================================================================================================
+
+
+Prac 4: Planning Network-based Firewall. 
+
+Place the components.
+Click the wireless router-> in GUI check the IP address -> no change in the settings is done.
+Connect Copper straight through wire between server and wireless router(ethernet 1).
+Click server -> desktop ->IP address -> DHCP -> auto IP will be provided.Check the connectivity between PC and server
+(PC – server : ping 192.168.0.100) ICMP
+
+We need to block the ICMP protocol i.e. ping command
+Click the server -> desktop -> IPv4 Firewall -> 
+
+
+Action: deny;	Protocol : ICMP;	
+Remote IP : 0.0.0.0;	Remote Wildcard Mask : 255.255.255.255 	
+add
+Action: allow;	Protocol : IP; 
+Remote IP : 0.0.0.0;	Remote Wildcard Mask : 255.255.255.255  
+add>save
+
+try pinging it wont ping
+
+
+=====================================================================================================================================================================================================
+
+
+Prac 5: Creating an Adhoc Network 
+
+Add two wireless routers (WRT300N): Connect two routers through copper cross over via Ethernet 
+router: set security mode to WPA2 Personel
+in router gui > In administration set remote access as enabled. (dont change anything else)
+check connectivity
+connect pC 
+and check connection
+
+
+=====================================================================================================================================================================================================
+
+Prac 6: Configuring Basic AP Settings.
+
+Add two access point
+Add port to router HWIC 2T
+click access point – config – port 0 – status – ON
+access point – config – port 1 – status – ON – SSID – CS – WPA2-PSK – pass phrase – ciscopacket1
+Repeat same for other access point where SSID – IT and pass phrase as ciscopacket2 
+
+PC0: 192.168.1.2, PC1: 192.168.1.3, DG: 192.168.1.1
+PC1: 192.168.2.2, PC2: 192.168.2.3, DG: 192.168.2.1
+
+clockrate 64000
+
+R0: IP:	192.168.1.1, Serial: 10.0.0.1, RIP: 10.0.0.0, 192.168.1.0
+R1: IP: 192.168.2.1, Serial: 10.0.0.2, RIP: 10.0.0.0, 192.168.2.0
+
+
+=====================================================================================================================================================================================================
+
+
+Prac 7: Configure Ethernet/Fast Ethernet Interface
+
+Add the components (Router :2620, Switch: 2960, End devices) 
+Give Diff IP address to the end devices and same default gateway
+
+Configure the router (Router – CLI) 
+
+Router>en
+Router#conf t
+Router(config)#int fa0/0
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#exit
+
+
+=====================================================================================================================================================================================================
+
+
+Prac 8: Configure Radio Interface through GUI
+
+Select the router - GUI – setup - DHCP server – disable - save 
+set ssid set wep key, set ip 192.168.0.1 
+
+PC0: 192.168.0.5, PC1: 192.168.0.6, PC2: 192.168.0.7
+DG: 192.168.0.1
